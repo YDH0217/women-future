@@ -2,338 +2,111 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>档案检索 - Women Future</title>
+    <title>检索</title>
     <style>
-        :root {
-            --main: #9B7BCC;
-            --dark: #7A57B8;
-            --light: #E8DFF5;
-            --bg: #FAF9FC;
-            --white: #fff;
-            --gray: #f6f3fc;
-            --text: #333;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
-        }
-        body {
-            background: var(--bg);
-            min-height: 100vh;
-            padding: 20px;
-        }
-        .nav {
-            max-width: 900px;
-            margin: 0 auto 24px;
-            text-align: center;
-        }
-        .nav a {
-            font-size: 17px;
-            color: var(--dark);
-            padding: 8px 16px;
-            margin: 0 10px;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-        .nav a:hover {
-            color: var(--main);
-            background: rgba(155, 123, 204, 0.08);
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--white);
-            padding: 28px;
-            border-radius: 16px;
-            box-shadow: 0 4px 12px rgba(155,123,204,0.1);
-        }
-        .search-box {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-        .search-input {
-            flex: 1;
-            padding: 12px;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            outline: none;
-        }
-        .search-btn {
-            padding: 0 20px;
-            background: var(--main);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-        .archive-item {
-            padding: 18px;
-            border-left: 5px solid var(--main);
-            margin-bottom: 14px;
-            border-radius: 10px;
-            background: #ffffff;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .archive-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(155,123,204,0.1);
-        }
-        .archive-item h4 {
-            color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 16px;
-        }
-        .meta {
-            font-size: 12px;
-            color: #888;
-            margin-top: 6px;
-        }
-        .empty-tip {
-            text-align: center;
-            color: #999;
-            padding: 40px 0;
-        }
-        .category-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 16px;
-        }
-        .category-tag {
-            padding: 6px 12px;
-            background: var(--light);
-            color: var(--dark);
-            border-radius: 20px;
-            font-size: 14px;
-            cursor: pointer;
-            border: none;
-        }
-        .category-tag.active,
-        .category-tag:hover {
-            background: var(--main);
-            color: #fff;
-        }
-
-        /* 🔥 美化后的详情弹窗 */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.45);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 999;
-            padding: 20px;
-        }
-        .modal-content {
-            background: #fff;
-            width: 100%;
-            max-width: 680px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 36px;
-            border-radius: 18px;
-            position: relative;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-        }
-        .close {
-            position: absolute;
-            top: 20px;
-            right: 24px;
-            font-size: 26px;
-            cursor: pointer;
-            color: #aaa;
-            transition: 0.2s;
-        }
-        .close:hover {
-            color: #555;
-        }
-        .modal-title {
-            font-size: 20px;
-            color: var(--dark);
-            margin-bottom: 28px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--light);
-        }
-        .field {
-            margin-bottom: 20px;
-        }
-        .field label {
-            display: block;
-            font-size: 14px;
-            color: #888;
-            margin-bottom: 6px;
-        }
-        .field .value {
-            font-size: 15px;
-            color: #333;
-            line-height: 1.7;
-            background: var(--gray);
-            padding: 12px 14px;
-            border-radius: 8px;
-        }
+        :root{--main:#9B7BCC;--light:#f6f3fc}
+        *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+        body{background:#f9f9f9;padding:20px}
+        .container{max-width:700px;margin:auto}
+        .card{background:white;padding:18px;margin:10px 0;border-radius:10px;cursor:pointer}
+        .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;align-items:center;justify-content:center}
+        .modalBody{background:white;width:90%;max-width:500px;padding:24px;border-radius:12px}
+        .cate{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+        .cate span{background:var(--light);padding:6px 10px;border-radius:20px;cursor:pointer}
+        .cate .active{background:var(--main);color:white}
+        input{padding:10px;width:100%;margin:10px 0;border-radius:6px;border:1px solid #ddd}
     </style>
 </head>
 <body>
-
-<div class="nav">
-    <a href="index.html">封面</a>
-    <a href="search.html"><b>检索</b></a>
-    <a href="create.html">新建档案</a>
-    <a href="mine.html">我的中心</a>
-</div>
-
 <div class="container">
-    <div class="category-tags">
-        <button class="category-tag active" data-cate="all">全部</button>
-        <button class="category-tag" data-cate="世界文学">世界文学</button>
-        <button class="category-tag" data-cate="社会认知">社会认知</button>
-        <button class="category-tag" data-cate="情绪心理">情绪心理</button>
-        <button class="category-tag" data-cate="人文历史">人文历史</button>
-        <button class="category-tag" data-cate="职场技能">职场技能</button>
-        <button class="category-tag" data-cate="商业理财">商业理财</button>
-        <button class="category-tag" data-cate="自我成长">自我成长</button>
+    <h2>档案检索</h2>
+    <input id="search" placeholder="搜索书名/问题" oninput="load()">
+    <div class="cate">
+        <span class="active" onclick="filter('全部')">全部</span>
+        <span onclick="filter('世界文学')">世界文学</span>
+        <span onclick="filter('社会认知')">社会认知</span>
+        <span onclick="filter('情绪心理')">情绪心理</span>
+        <span onclick="filter('人文历史')">人文历史</span>
+        <span onclick="filter('职场技能')">职场技能</span>
+        <span onclick="filter('商业理财')">商业理财</span>
+        <span onclick="filter('自我成长')">自我成长</span>
     </div>
-
-    <div class="search-box">
-        <input class="search-input" id="searchKey" placeholder="搜索问题/书名">
-        <button class="search-btn" onclick="refreshList()">检索</button>
-    </div>
-
     <div id="list"></div>
 </div>
 
-<!-- 美观详情弹窗 -->
 <div class="modal" id="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal()">×</span>
-        <div id="modalContent"></div>
+    <div class="modalBody">
+        <div id="detail"></div>
+        <br>
+        <button onclick="closeModal()">关闭</button>
     </div>
 </div>
 
 <script>
-let currentCate = "all";
-let listData = [];
+const DB_NAME = "WomenFutureDB";
+const STORE = "archives";
+let db;
+let currentCate = "全部";
 
-window.onload = function(){
-    refreshList();
-    bindCate();
-};
-
-function getAllData(){
-    return JSON.parse(localStorage.getItem("archiveList") || "[]");
-}
-
-function refreshList(){
-    let key = document.getElementById("searchKey").value.toLowerCase();
-    let list = getAllData();
-    let show = list;
-
-    if(currentCate !== "all"){
-        show = show.filter(i=>i.cate == currentCate);
-    }
-    if(key){
-        show = show.filter(i=>
-            i.q.toLowerCase().includes(key) ||
-            i.book.toLowerCase().includes(key)
-        );
-    }
-    listData = show;
-    render(show);
-}
-
-function render(data){
-    let dom = document.getElementById("list");
-    if(data.length === 0){
-        dom.innerHTML = "<div class='empty-tip'>暂无档案，前往新建档案录入内容</div>";
-        return;
-    }
-    dom.innerHTML = data.map((item, index)=>`
-        <div class="archive-item" data-index="${index}">
-            <h4>${item.q}</h4>
-            <div>书名：${item.book}</div>
-            <div class="meta">ID：${item.id}</div>
-        </div>
-    `).join("");
-
-    document.querySelectorAll(".archive-item").forEach(el=>{
-        el.onclick = function(){
-            let idx = parseInt(this.getAttribute("data-index"));
-            openDetail(listData[idx]);
+function openDB() {
+    return new Promise(resolve => {
+        const req = indexedDB.open(DB_NAME,1);
+        req.onupgradeneeded = e=>{
+            db=e.target.result;
+            if(!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE,{keyPath:"id"});
         };
+        req.onsuccess=e=>{db=e.target.result;resolve()};
     });
 }
 
-// 🔥 严格按你要求的顺序展示：核心问题、书名、编辑ID、问题答案、精彩摘录、阅读总结、获取渠道
+async function load(){
+    await openDB();
+    const tx=db.transaction(STORE,"readonly");
+    const req=tx.objectStore(STORE).getAll();
+    req.onsuccess=()=>{
+        let list=req.result;
+        if(currentCate!=="全部") list=list.filter(i=>i.cate===currentCate);
+        const kw=document.getElementById("search").value.toLowerCase();
+        if(kw) list=list.filter(i=>i.q.toLowerCase().includes(kw)||i.book.toLowerCase().includes(kw));
+        render(list);
+    };
+}
+
+function render(list){
+    const box=document.getElementById("list");
+    box.innerHTML=list.map(i=>`
+        <div class="card" onclick="openDetail(${JSON.stringify(i).replace(/"/g,"&quot;")})">
+            <h4>${i.q}</h4>
+            <p>书名：${i.book}</p>
+            <p>ID：${i.id}</p>
+        </div>
+    `).join("");
+}
+
+function filter(cate){
+    currentCate=cate;
+    load();
+}
+
 function openDetail(item){
-    let html = `
-        <div class="modal-title">档案详情</div>
-
-        <div class="field">
-            <label>核心问题</label>
-            <div class="value">${item.q || '无'}</div>
-        </div>
-
-        <div class="field">
-            <label>书名</label>
-            <div class="value">${item.book || '无'}</div>
-        </div>
-
-        <div class="field">
-            <label>编辑ID</label>
-            <div class="value">${item.id || '无'}</div>
-        </div>
-
-        <div class="field">
-            <label>问题答案</label>
-            <div class="value">${item.ans || '无填写内容'}</div>
-        </div>
-
-        <div class="field">
-            <label>精彩摘录</label>
-            <div class="value">${item.excerpt || '无填写内容'}</div>
-        </div>
-
-        <div class="field">
-            <label>阅读总结</label>
-            <div class="value">${item.summary || '无填写内容'}</div>
-        </div>
-
-        <div class="field">
-            <label>获取渠道</label>
-            <div class="value">${item.source || '无'}</div>
-        </div>
+    document.getElementById("detail").innerHTML=`
+        <h3>${item.q}</h3>
+        <p><b>书名：</b>${item.book}</p>
+        <p><b>ID：</b>${item.id}</p>
+        <p><b>分类：</b>${item.cate}</p>
+        <p><b>答案：</b>${item.ans}</p>
+        <p><b>摘录：</b>${item.excerpt}</p>
+        <p><b>总结：</b>${item.summary}</p>
+        <p><b>渠道：</b>${item.source}</p>
     `;
-    document.getElementById("modalContent").innerHTML = html;
-    document.getElementById("modal").style.display = "flex";
+    document.getElementById("modal").style.display="flex";
 }
 
 function closeModal(){
-    document.getElementById("modal").style.display = "none";
+    document.getElementById("modal").style.display="none";
 }
 
-function bindCate(){
-    let tags = document.querySelectorAll(".category-tag");
-    tags.forEach(t=>{
-        t.onclick = ()=>{
-            tags.forEach(x=>x.classList.remove("active"));
-            t.classList.add("active");
-            currentCate = t.dataset.cate;
-            refreshList();
-        }
-    })
-}
+window.onload=load;
 </script>
-
 </body>
 </html>
