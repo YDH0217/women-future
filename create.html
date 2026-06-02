@@ -2,172 +2,79 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>新建档案 - Women Future</title>
+    <title>新建档案</title>
     <style>
-        :root {
-            --main: #9B7BCC;
-            --light: #E8DFF5;
-            --dark: #7A57B8;
-            --bg: #FAF9FC;
-            --white: #fff;
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: "Microsoft YaHei", "Segoe UI", sans-serif;
-        }
-        body { background: var(--bg); }
-        .nav {
-            height: 65px;
-            background: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 20px;
-            box-shadow: 0 2px 10px rgba(155,123,204,0.1);
-            position: sticky; top:0; z-index:99;
-        }
-        .logo { font-size:20px; font-weight:bold; color:var(--main); }
-        .menu a {
-            margin-left:20px;
-            text-decoration:none;
-            color:#555;
-        }
-        .menu a.active { color:var(--main); font-weight:bold; }
-        .container { max-width:700px; margin:30px auto; padding:0 20px; }
-        .card { background:#fff; padding:28px; border-radius:14px; }
-        .form-item { margin-bottom:18px; }
-        .form-item label { display:block; margin-bottom:8px; font-weight:bold; }
-        input, textarea, select {
-            width:100%; padding:12px; border:1px solid #eee; border-radius:8px; outline:none;
-        }
-        textarea { min-height:120px; resize:vertical; }
-        .btn-group { display:flex; gap:12px; margin-top:24px; }
-        .btn { flex:1; padding:13px; border:none; border-radius:8px; cursor:pointer; }
-        .btn-preview { background:var(--light); color:var(--dark); }
-        .btn-submit { background:var(--main); color:#fff; }
-        .mask { display:none; position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:999; align-items:center; justify-content:center; padding:20px; }
-        .preview-box { background:#fff; max-width:540px; padding:28px; border-radius:16px; width:100%; }
+        *{margin:0;padding:0;box-sizing:border-box;font-family: Arial,sans-serif}
+        .box{max-width:600px;margin:40px auto;padding:20px}
+        input,textarea,select{width:100%;margin:8px 0;padding:12px;border:1px solid #ddd;border-radius:6px}
+        button{background:#9B7BCC;color:white;padding:14px;border:none;border-radius:6px;width:100%;margin-top:10px}
+        label{font-weight:bold;color:#555}
     </style>
 </head>
 <body>
-    <div class="nav">
-        <div class="logo">Women Future</div>
-        <div class="menu">
-            <a href="index.html">封面</a>
-            <a href="search.html">检索</a>
-            <a href="create.html" class="active">新建档案</a>
-            <a href="mine.html">我的中心</a>
-        </div>
-    </div>
+<div class="box">
+    <h2>新建档案</h2>
+    <label>核心问题</label><input id="q">
+    <label>书名</label><input id="book">
+    <label>编辑ID</label><input id="editId">
+    <label>分类</label>
+    <select id="cate">
+        <option>世界文学</option>
+        <option>社会认知</option>
+        <option>情绪心理</option>
+        <option>人文历史</option>
+        <option>职场技能</option>
+        <option>商业理财</option>
+        <option>自我成长</option>
+    </select>
+    <label>问题答案</label><textarea id="ans" rows="3"></textarea>
+    <label>精彩摘录</label><textarea id="excerpt" rows="3"></textarea>
+    <label>阅读总结</label><textarea id="summary" rows="3"></textarea>
+    <label>获取渠道</label><input id="source">
+    <button onclick="save()">保存档案</button>
+</div>
 
-    <div class="container">
-        <div class="card">
-            <div class="form-item">
-                <label>编辑ID（确认后不可修改）</label>
-                <input id="uid" type="text" placeholder="自定义ID，保存后锁定">
-            </div>
-            <div class="form-item">
-                <label>书名</label>
-                <input id="book">
-            </div>
-            <div class="form-item">
-                <label>分类</label>
-                <select id="cate">
-                    <option>世界文学</option>
-                    <option>社会认知</option>
-                    <option>情绪心理</option>
-                    <option>人文历史</option>
-                    <option>职场技能</option>
-                    <option>商业理财</option>
-                    <option>自我成长</option>
-                </select>
-            </div>
-            <div class="form-item">
-                <label>核心问题</label>
-                <input id="q">
-            </div>
-            <div class="form-item">
-                <label>精彩摘录</label>
-                <textarea id="excerpt"></textarea>
-            </div>
-            <div class="form-item">
-                <label>阅读总结</label>
-                <textarea id="summary"></textarea>
-            </div>
-            <div class="form-item">
-                <label>问题答案</label>
-                <textarea id="ans"></textarea>
-            </div>
-            <div class="form-item">
-                <label>获取渠道</label>
-                <input id="source">
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-preview" onclick="preview()">预览</button>
-                <button class="btn btn-submit" onclick="save()">保存</button>
-            </div>
-        </div>
-    </div>
+<script>
+const DB_NAME = "WomenFutureDB";
+const STORE = "archives";
+let db;
 
-    <div class="mask" id="pmask">
-        <div class="preview-box">
-            <h3>预览</h3>
-            <p>ID：<span id="p_id"></span></p>
-            <p>书名：<span id="p_book"></span></p>
-            <p>问题：<span id="p_q"></span></p>
-            <button onclick="document.getElementById('pmask').style.display='none'">关闭</button>
-        </div>
-    </div>
-
-    <script>
-        function preview() {
-            document.getElementById('p_id').innerText = document.getElementById('uid').value;
-            document.getElementById('p_book').innerText = document.getElementById('book').value;
-            document.getElementById('p_q').innerText = document.getElementById('q').value;
-            document.getElementById('pmask').style.display = 'flex';
-        }
-
-        function save() {
-            const uid = document.getElementById('uid').value.trim();
-            const book = document.getElementById('book').value.trim();
-            const q = document.getElementById('q').value.trim();
-            const cate = document.getElementById('cate').value;
-            const excerpt = document.getElementById('excerpt').value.trim();
-            const summary = document.getElementById('summary').value.trim();
-            const ans = document.getElementById('ans').value.trim();
-            const source = document.getElementById('source').value.trim();
-
-            if (!uid || !book || !q) {
-                alert('ID、书名、核心问题不能为空！');
-                return;
+function openDB() {
+    return new Promise(resolve => {
+        const req = indexedDB.open(DB_NAME, 1);
+        req.onupgradeneeded = e => {
+            db = e.target.result;
+            if (!db.objectStoreNames.contains(STORE)) {
+                db.createObjectStore(STORE, { keyPath: "id" });
             }
+        };
+        req.onsuccess = e => {
+            db = e.target.result;
+            resolve();
+        };
+    });
+}
 
-            const data = {
-                id: uid,
-                book,
-                q,
-                cate,
-                excerpt,
-                summary,
-                ans,
-                source,
-                like: 0
-            };
-
-            let list = JSON.parse(localStorage.getItem('archiveList') || '[]');
-            list.unshift(data);
-            localStorage.setItem('archiveList', JSON.stringify(list));
-
-            // 保存后锁定ID
-            document.getElementById('uid').disabled = true;
-            document.getElementById('uid').style.background = '#f5f5f5';
-
-            alert('发布成功！');
-            location.href = 'search.html'; // 发布后跳检索页
-        }
-    </script>
+async function save() {
+    await openDB();
+    const data = {
+        id: Date.now().toString(),
+        q: document.getElementById("q").value,
+        book: document.getElementById("book").value,
+        id: document.getElementById("editId").value,
+        cate: document.getElementById("cate").value,
+        ans: document.getElementById("ans").value,
+        excerpt: document.getElementById("excerpt").value,
+        summary: document.getElementById("summary").value,
+        source: document.getElementById("source").value
+    };
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).add(data);
+    tx.oncomplete = () => {
+        alert("保存成功！");
+        location.href = "search.html";
+    };
+}
+</script>
 </body>
 </html>
