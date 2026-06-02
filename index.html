@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Women Future - 封面页</title>
+    <title>Women Future</title>
     <style>
         * {
             margin: 0;
@@ -15,64 +15,57 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: #FAF9FC; /* 米白色纯色背景 */
+            background: #FAF9FC;
+            background: linear-gradient(120deg, #FAF9FC 0%, #F5F1FB 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
             position: relative;
-            /* 增加背景渐变提升质感 */
-            background: linear-gradient(120deg, #FAF9FC 0%, #F5F1FB 100%);
         }
-        .content{
-            z-index:2;
-            text-align:center;
-            /* 响应式内边距 */
+
+        /* 导航在标题上方 */
+        .top-nav {
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        .top-nav a {
+            font-size: 17px;
+            color: #7A57B8;
+            text-decoration: underline;
+            text-underline-offset: 6px;
+            text-decoration-color: rgba(122, 87, 184, 0.4);
+            padding: 8px 16px;
+            margin: 0 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        .top-nav a:hover {
+            color: #9B7BCC;
+            background: rgba(155, 123, 204, 0.08);
+            text-decoration-color: #9B7BCC;
+        }
+
+        .content {
+            z-index: 2;
+            text-align: center;
             padding: 0 20px;
-            /* 防止内容溢出 */
-            max-width: 100%;
+            cursor: pointer;
         }
-        h1{
-            font-size: clamp(36px, 8vw, 68px); /* 响应式字体 */
-            color:#9B7BCC;
-            letter-spacing:3px;
-            /* 增加文字间距适配小屏 */
+        h1 {
+            font-size: 68px;
+            color: #9B7BCC;
+            letter-spacing: 3px;
             line-height: 1.2;
             margin-bottom: 8px;
         }
-        .slogan{
-            font-size: clamp(14px, 2vw, 18px);
-            color:#7A57B8;
-            margin: 12px 0 45px;
+        .slogan {
+            font-size: 18px;
+            color: #7A57B8;
             font-weight: 400;
-            /* 增加标语质感 */
             opacity: 0.9;
         }
-        .enter{
-            padding: 13px 36px;
-            background:#9B7BCC;
-            color:#fff;
-            border:none;
-            border-radius:30px;
-            font-size: clamp(14px, 2vw, 16px);
-            cursor:pointer;
-            transition: all 0.3s ease;
-            /* 增加按钮阴影 */
-            box-shadow: 0 4px 12px rgba(155, 123, 204, 0.2);
-            /* 按钮最小尺寸 */
-            min-width: 120px;
-        }
-        .enter:hover{
-            background:#7A57B8;
-            /* 悬浮放大+加深阴影 */
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(122, 87, 184, 0.3);
-        }
-        .enter:active{
-            transform: translateY(0);
-            box-shadow: 0 2px 8px rgba(122, 87, 184, 0.2);
-        }
-        /* 可选：添加装饰元素 */
+
         .decor {
             position: absolute;
             z-index: 1;
@@ -96,14 +89,23 @@
     </style>
 </head>
 <body>
-    <!-- 装饰元素 -->
+
+    <!-- 三个可点击的导航 -->
+    <div class="top-nav">
+        <a href="search.html">检索</a>
+        <a href="create.html">新建档案</a>
+        <a href="mine.html">我的中心</a>
+    </div>
+
+    <!-- 装饰 -->
     <div class="decor"></div>
     <div class="decor-2"></div>
-    
-    <div class="content">
+
+    <!-- 标题点击返回首页 -->
+    <div class="content" onclick="window.location.href='index.html'">
         <h1>Women Future</h1>
         <div class="slogan">We Create Together</div>
-        <button class="enter" onclick="location.href='index.html'">进入首页</button>
     </div>
+
 </body>
 </html>
