@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>检索 - Women Future</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        :root {
+            --main: #9B7BCC;
+            --light: #E8DFF5;
+            --dark: #7A57B8;
+            --bg: #FAF9FC;
+            --white: #fff;
+        }
+        body {
+            background: var(--bg);
+        }
+        .nav {
+            height: 65px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(155,123,204,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 99;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--main);
+        }
+        .menu a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: #555;
+        }
+        .menu a.active {
+            color: var(--main);
+            font-weight: bold;
+        }
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        .search-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 20px;
+        }
+        .search-row {
+            display: flex;
+            gap: 10px;
+        }
+        .search-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            outline: none;
+        }
+        .search-btn {
+            padding: 0 18px;
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .category {
+            margin-top: 14px;
+        }
+        .cate-line1, .cate-line2 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .cate-item {
+            background: var(--light);
+            color: var(--dark);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .cate-item.active {
+            background: var(--main);
+            color: #fff;
+        }
+        .card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 16px;
+            border-left: 4px solid var(--main);
+            cursor: pointer;
+        }
+        .question {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+        .book-name, .edit-id {
+            font-size: 13px;
+            color: #666;
+            margin-bottom:4px;
+        }
+        .like{
+            font-size:13px;
+            color:var(--main);
+            user-select:none;
+        }
+        .detail-mask {
+            display: none;
+            position: fixed;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .detail-box {
+            background: #fff;
+            max-width: 540px;
+            border-radius: 16px;
+            padding: 28px;
+            width: 100%;
+        }
+        .detail-item {
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #f3f3f3;
+        }
+        .detail-item label {
+            font-size: 13px;
+            color: #999;
+        }
+        .close-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--main);
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Women Future</div>
+        <div class="menu">
+            <a href="cover.html">封面</a>
+            <a href="index.html" class="active">检索</a>
+            <a href="create.html">新建档案</a>
+            <a href="mine.html">我的中心</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="search-card">
+            <div class="search-row">
+                <input class="search-input" id="searchKey" placeholder="书名/关键词/ID">
+                <button class="search-btn" onclick="startSearch()">开始搜索</button>
+            </div>
+            <div class="category">
+                <div class="cate-line1">
+                    <div class="cate-item active" data-cate="全部">全部</div>
+                    <div class="cate-item" data-cate="世界文学">世界文学</div>
+                    <div class="cate-item" data-cate="社会认知">社会认知</div>
+                    <div class="cate-item" data-cate="情绪心理">情绪心理</div>
+                </div>
+                <div class="cate-line2">
+                    <div class="cate-item" data-cate="人文历史">人文历史</div>
+                    <div class="cate-item" data-cate="职场技能">职场技能</div>
+                    <div class="cate-item" data-cate="商业理财">商业理财</div>
+                    <div class="cate-item" data-cate="自我成长">自我成长</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="listWrap">
+            <div class="card" data-type="情绪心理" data-data='{"q":"如何缓解焦虑？","book":"被讨厌的勇气","id":"user01","excerpt":"课题分离。","summary":"接纳自己。","ans":"专注自我。","source":"纸质书"}'>
+                <div class="question">如何缓解焦虑？</div>
+                <div class="book-name">书名：被讨厌的勇气</div>
+                <div class="edit-id">ID：user01</div>
+                <div class="like" onclick="event.stopPropagation();like(this)">❤️ 点赞 1</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-mask" id="detailMask">
+        <div class="detail-box">
+            <h3>档案详情</h3>
+            <div class="detail-item"><label>核心问题</label><p id="d_q"></p></div>
+            <div class="detail-item"><label>书名</label><p id="d_book"></p></div>
+            <div class="detail-item"><label>编辑ID</label><p id="d_id"></p></div>
+            <div class="detail-item"><label>摘录</label><p id="d_ex"></p></div>
+            <div class="detail-item"><label>总结</label><p id="d_sum"></p></div>
+            <div class="detail-item"><label>答案</label><p id="d_ans"></p></div>
+            <div class="detail-item"><label>渠道</label><p id="d_src"></p></div>
+            <button class="close-btn" onclick="closeDetail()">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        function like(el){
+            let arr = el.innerText.split(' ');
+            let num = Number(arr[2]);
+            el.innerHTML = '❤️ 点赞 ' + (num + 1);
+        }
+
+        const cards = document.querySelectorAll('.card');
+        const mask = document.getElementById('detailMask');
+
+        cards.forEach(card => {
+            card.onclick = () => {
+                const d = JSON.parse(card.dataset.data);
+                document.getElementById('d_q').innerText = d.q;
+                document.getElementById('d_book').innerText = d.book;
+                document.getElementById('d_id').innerText = d.id;
+                document.getElementById('d_ex').innerText = d.excerpt;
+                document.getElementById('d_sum').innerText = d.summary;
+                document.getElementById('d_ans').innerText = d.ans;
+                document.getElementById('d_src').innerText = d.source;
+                mask.style.display = 'flex';
+            }
+        })
+
+        function closeDetail() { mask.style.display = 'none' }
+        function startSearch() {
+            let kw = document.getElementById('searchKey').value.toLowerCase();
+            cards.forEach(c => {
+                let t = c.innerText.toLowerCase();
+                c.style.display = t.includes(kw) ? 'block' : 'none';
+            })
+        }
+
+        const cates = document.querySelectorAll('.cate-item');
+        cates.forEach(i => {
+            i.onclick = () => {
+                cates.forEach(x => x.classList.remove('active'));
+                i.classList.add('active');
+                let v = i.dataset.cate;
+                cards.forEach(c => {
+                    if(v === '全部' || c.dataset.type === v) c.style.display = 'block';
+                    else c.style.display = 'none';
+                })
+            }
+        })
+    </script>
+</body>
+</html>

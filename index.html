@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Women Future - 封面页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+        }
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #FAF9FC; /* 米白色纯色背景 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            position: relative;
+            /* 增加背景渐变提升质感 */
+            background: linear-gradient(120deg, #FAF9FC 0%, #F5F1FB 100%);
+        }
+        .content{
+            z-index:2;
+            text-align:center;
+            /* 响应式内边距 */
+            padding: 0 20px;
+            /* 防止内容溢出 */
+            max-width: 100%;
+        }
+        h1{
+            font-size: clamp(36px, 8vw, 68px); /* 响应式字体 */
+            color:#9B7BCC;
+            letter-spacing:3px;
+            /* 增加文字间距适配小屏 */
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .slogan{
+            font-size: clamp(14px, 2vw, 18px);
+            color:#7A57B8;
+            margin: 12px 0 45px;
+            font-weight: 400;
+            /* 增加标语质感 */
+            opacity: 0.9;
+        }
+        .enter{
+            padding: 13px 36px;
+            background:#9B7BCC;
+            color:#fff;
+            border:none;
+            border-radius:30px;
+            font-size: clamp(14px, 2vw, 16px);
+            cursor:pointer;
+            transition: all 0.3s ease;
+            /* 增加按钮阴影 */
+            box-shadow: 0 4px 12px rgba(155, 123, 204, 0.2);
+            /* 按钮最小尺寸 */
+            min-width: 120px;
+        }
+        .enter:hover{
+            background:#7A57B8;
+            /* 悬浮放大+加深阴影 */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(122, 87, 184, 0.3);
+        }
+        .enter:active{
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(122, 87, 184, 0.2);
+        }
+        /* 可选：添加装饰元素 */
+        .decor {
+            position: absolute;
+            z-index: 1;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(155, 123, 204, 0.08);
+            top: 10%;
+            right: 10%;
+        }
+        .decor-2 {
+            position: absolute;
+            z-index: 1;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(122, 87, 184, 0.06);
+            bottom: 15%;
+            left: 8%;
+        }
+    </style>
+</head>
+<body>
+    <!-- 装饰元素 -->
+    <div class="decor"></div>
+    <div class="decor-2"></div>
+    
+    <div class="content">
+        <h1>Women Future</h1>
+        <div class="slogan">We Create Together</div>
+        <button class="enter" onclick="location.href='index.html'">进入首页</button>
+    </div>
+</body>
+</html>

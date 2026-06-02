@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的中心 - Women Future</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+        :root {
+            --main: #9B7BCC;
+            --light: #E8DFF5;
+            --dark: #7A57B8;
+            --bg: #FAF9FC;
+            --white: #fff;
+        }
+        body { background: var(--bg); }
+        .nav {
+            height: 65px;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            box-shadow: 0 2px 10px rgba(155,123,204,0.1);
+            position: sticky; top:0; z-index:99;
+        }
+        .logo { font-size:20px; font-weight:bold; color:var(--main); }
+        .menu a { margin-left:20px; text-decoration:none; color:#555; }
+        .menu a.active { color:var(--main); font-weight:bold; }
+
+        .wrap { max-width:900px; margin:30px auto; display:flex; gap:28px; padding:0 20px; }
+        .left { width:240px; }
+        .side-card { background:#fff; padding:24px; border-radius:14px; position:sticky; top:90px; }
+        .side-title { margin-bottom:12px; font-weight:bold; }
+        .search-row { display:flex; gap:8px; margin-bottom:20px; }
+        .side-input { flex:1; padding:10px; border:1px solid #eee; border-radius:8px; }
+        .side-btn { background:var(--main); color:#fff; border:none; border-radius:8px; padding:0 12px; cursor:pointer; }
+        .cate-line1, .cate-line2 { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:8px; }
+        .cate-item { background:var(--light); padding:6px 10px; border-radius:20px; font-size:13px; cursor:pointer; }
+        .cate-item.active { background:var(--main); color:#fff; }
+
+        .right { flex:1; }
+        .page-title { margin-bottom:20px; font-size:18px; color:var(--dark); }
+        .card { background:#fff; padding:20px; border-radius:14px; margin-bottom:16px; border-left:4px solid var(--main); cursor:pointer; }
+        .question { font-weight:bold; margin-bottom:6px; }
+        .tip { font-size:12px; color:#999; margin-top:6px; }
+
+        .detail-mask { display:none; position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.4); z-index:999; align-items:center; justify-content:center; padding:20px; }
+        .detail-box { background:#fff; max-width:540px; padding:28px; border-radius:16px; width:100%; }
+        .close-btn { width:100%; padding:13px; background:var(--main); color:#fff; border:none; border-radius:10px; cursor:pointer; margin-top:10px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <div class="logo">Women Future</div>
+        <div class="menu">
+            <a href="cover.html">封面</a>
+            <a href="index.html">检索</a>
+            <a href="create.html">新建档案</a>
+            <a href="mine.html" class="active">我的中心</a>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="left">
+            <div class="side-card">
+                <div class="side-title">档案检索</div>
+                <div class="search-row">
+                    <input class="side-input" id="mineSearch" placeholder="书名/ID/关键词">
+                    <button class="side-btn" onclick="mySearch()">搜索</button>
+                </div>
+                <div class="side-title">分类筛选</div>
+                <div class="cate-line1">
+                    <div class="cate-item active" data-cate="全部">全部</div>
+                    <div class="cate-item" data-cate="世界文学">世界文学</div>
+                    <div class="cate-item" data-cate="社会认知">社会认知</div>
+                    <div class="cate-item" data-cate="情绪心理">情绪心理</div>
+                </div>
+                <div class="cate-line2">
+                    <div class="cate-item" data-cate="人文历史">人文历史</div>
+                    <div class="cate-item" data-cate="职场技能">职场技能</div>
+                    <div class="cate-item" data-cate="商业理财">商业理财</div>
+                    <div class="cate-item" data-cate="自我成长">自我成长</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right">
+            <h2 class="page-title">我的未来</h2>
+            <div id="mineList">
+                <div class="card" data-type="情绪心理" data-data='{"q":"如何缓解焦虑？","book":"被讨厌的勇气","id":"user01","excerpt":"课题分离。","summary":"接纳自己。","ans":"专注自我。","source":"纸质书"}'>
+                    <div class="question">如何缓解焦虑？</div>
+                    <div>书名：被讨厌的勇气</div>
+                    <div>ID：user01</div>
+                    <div class="tip">已发布，不可修改</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-mask" id="detailMask">
+        <div class="detail-box">
+            <h3>档案详情</h3>
+            <div>问题：<p id="d_q"></p></div>
+            <div>书名：<p id="d_book"></p></div>
+            <div>ID：<p id="d_id"></p></div>
+            <div>摘录：<p id="d_ex"></p></div>
+            <div>总结：<p id="d_sum"></p></div>
+            <div>答案：<p id="d_ans"></p></div>
+            <div>渠道：<p id="d_src"></p></div>
+            <button class="close-btn" onclick="closeDetail()">关闭</button>
+        </div>
+    </div>
+
+    <script>
+        const cards = document.querySelectorAll('#mineList .card');
+        const mask = document.getElementById('detailMask');
+
+        cards.forEach(c => {
+            c.onclick = () => {
+                const d = JSON.parse(c.dataset.data);
+                document.getElementById('d_q').innerText = d.q;
+                document.getElementById('d_book').innerText = d.book;
+                document.getElementById('d_id').innerText = d.id;
+                document.getElementById('d_ex').innerText = d.excerpt;
+                document.getElementById('d_sum').innerText = d.summary;
+                document.getElementById('d_ans').innerText = d.ans;
+                document.getElementById('d_src').innerText = d.source;
+                mask.style.display = 'flex';
+            }
+        })
+
+        function closeDetail() { mask.style.display = 'none' }
+
+        function mySearch() {
+            let kw = document.getElementById('mineSearch').value.toLowerCase();
+            cards.forEach(c => {
+                c.style.display = c.innerText.toLowerCase().includes(kw) ? 'block' : 'none';
+            })
+        }
+
+        const cates = document.querySelectorAll('.cate-item');
+        cates.forEach(i => {
+            i.onclick = () => {
+                cates.forEach(x => x.classList.remove('active'));
+                i.classList.add('active');
+                let v = i.dataset.cate;
+                cards.forEach(c => {
+                    if(v === '全部' || c.dataset.type === v) c.style.display = 'block';
+                    else c.style.display = 'none';
+                })
+            }
+        })
+    </script>
+</body>
+</html>
